@@ -1,28 +1,10 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Physics, useSphere, useBox, useSpring } from '@react-three/cannon'
+import { Physics, useSphere, useSpring } from '@react-three/cannon'
 
-import type { BoxProps, SphereProps, Triplet } from '@react-three/cannon'
+import type { SphereProps } from '@react-three/cannon'
 import type { Object3D } from 'three'
-
-const Box = forwardRef<Object3D, BoxProps>((props, ref) => {
-  const args: Triplet = [1, 1, 1]
-  useBox(
-    () => ({
-      mass: 1,
-      args,
-      linearDamping: 0.7,
-      ...props,
-    }),
-    ref,
-  )
-  return (
-    <mesh ref={ref}>
-      <boxBufferGeometry args={args} />
-      <meshNormalMaterial />
-    </mesh>
-  )
-})
+import { Box } from './Box'
 
 const Ball = forwardRef<Object3D, SphereProps>((props, ref) => {
   const [, { position }] = useSphere(() => ({ type: 'Kinematic', args: [0.5], ...props }), ref)
@@ -54,6 +36,7 @@ const BoxAndBall = () => {
 }
 
 export default () => {
+  console.log('Testing');
   return (
     <>
       <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
